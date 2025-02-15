@@ -69,7 +69,7 @@ const generateToken = async (payload) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: `https://invoice-server-2.onrender.com/auth/google/callback` // Make sure this matches your Google Console setting
+  callbackURL: `https://instantinvoicer-server.vercel.app/auth/google/callback` // Make sure this matches your Google Console setting
 },
   async (accessToken, refreshToken, profile, done) => {
     try {
