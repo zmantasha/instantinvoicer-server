@@ -14,7 +14,7 @@ class InvoiceController {
       // Add the URL to the invoice body
       // req.body.invoiceDetails.url = invoiceUrl;
       const invoice = await InvoiceServiceInstance.createInvoice(req.body);
-      console.log(invoice);
+      // console.log(invoice);
       res.status(201).json({ invoice, message: "Save Invoice Successfull" });
     } catch (error) {
       res.status(500).json({ error: error.message });
