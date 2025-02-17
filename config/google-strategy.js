@@ -69,7 +69,11 @@ const generateToken = async (payload) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+<<<<<<< HEAD
   callbackURL: `https://instantinvoicer-server.vercel.app/auth/google/callback` // Make sure this matches your Google Console settingg
+=======
+  callbackURL: `https://instantinvoicer-server.vercel.app/auth/google/callback` // Make sure this matches your Google Console setting
+>>>>>>> d8855e4ab781affba75fe9dfefae1dbd2aafcab0
 },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -94,8 +98,8 @@ passport.use(new GoogleStrategy({
 
       // Generate JWT token for the user
       const token = await generateToken({ userId: user._id });
-      // console.log("user", user._id);
-      // console.log("access token", token);
+      console.log("user", user._id);
+      console.log("access token", token);
 
       // Return user info and the generated token
       return done(null, { user, token });
