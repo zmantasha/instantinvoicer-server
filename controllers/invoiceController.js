@@ -42,7 +42,7 @@ static uploadSenderLogo=async(req,res)=>{
        }
        const fileUri=getDataUri(filePath)
       const mycloud=await cloudnary.v2.uploader.upload(fileUri.content)
-      console.log(mycloud)
+      // console.log(mycloud)
 
   
       res.status(200).json({ logoUrl:mycloud.secure_url });
@@ -83,7 +83,7 @@ static uploadSenderLogo=async(req,res)=>{
   // static get Invoice by userId
   static getInvoicebyUserId = async (req, res) => {
     try {
-      console.log(req.params.id);
+      // console.log(req.params.id);
       const invoice = await InvoiceServiceInstance.getInvoiceByuserId(
         req.params.id
       );
@@ -170,63 +170,10 @@ static updateInvoicestatus = async (req, res) => {
       res.status(500).send("oops something went wrong");
     }
   };
-
-  // static uploadInvoice =async(req,res)=>{
-  // const pdfLocalpath=req.file?.path
-  //    if(!pdfLocalpath){
-  //     return res.status(400).json({ error: "No file uploaded." });
-  //    }
-  //    console.log(req.file)
-  //    const fileUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-  //    console.log(fileUrl)
-     //   res.json({ url: fileUrl });
-    //  const sharePdf= await uploadOnCloudinary(pdfLocalpath)
-    //  console.log(sharePdf)
-
-
-    // console.log(logoLocalPath)
-    //   if(!logoLocalPath){
-    //    return res.status(400).json({ message: "Avatar File is missing." });
-    //   }
-    //   const logo= await uploadOnCloudinary(logoLocalPath)
-    //   console.log(logo)
-    //   if(!logo.url){
-    //    return res.status(400).json({ message: "Error while uploading on Avatar." });
-    //   }
-    //   const user= await UserServicesInstance.updateLogo(req.params.id,logo.url)
-    //   res.status(200).json({ user }); 
   }
 
 
-//   const express = require("express");
-// const multer = require("multer");
-// const path = require("path");
-// const app = express();
 
-// // Configure multer for file uploads
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads/"); // Set your uploads directory
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, `${Date.now()}-${file.originalname}`);
-//   },
-// });
-// const upload = multer({ storage });
 
-// // Endpoint to handle file upload
-// app.post("/api/v1/upload", upload.single("file"), (req, res) => {
-//   if (!req.file) {
-//     return res.status(400).send("No file uploaded.");
-//   }
-//   const fileUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-//   res.json({ url: fileUrl });
-// });
 
-// // Serve uploaded files
-// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-// app.listen(8002, () => console.log("Server running on http://localhost:8002"));
-
-// }
 module.exports = InvoiceController;

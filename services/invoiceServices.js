@@ -51,7 +51,7 @@ class InvoiceServices {
   // Update invoice
   updateInvoice = async (id, body) => {
     try {
-      console.log(body)
+      // console.log(body)
       const updateinvoice = await InvoiceModel.findByIdAndUpdate({ _id: id }, 
         body, 
         {new: true}
@@ -66,7 +66,7 @@ class InvoiceServices {
   // update invoice
   updateInvoiceStatus = async (id, status, total, amountPaid, balanceDue) => {
     try {
-      console.log("Updating status:", status);
+      // console.log("Updating status:", status);
       
       const updateInvoice = await InvoiceModel.findByIdAndUpdate(
         id,  // Fixed: Pass id directly

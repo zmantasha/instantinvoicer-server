@@ -1,17 +1,17 @@
 const UserServices= require("../services/userServices")
 const refreshAccessToken = require("../utils/refreshAccessToken")
-const UserRefreshTokenServices = require("../services/userRefreshTokenServices");
-const UserRefreshTokenServicesInstance= new UserRefreshTokenServices()
+// const UserRefreshTokenServices = require("../services/userRefreshTokenServices");
+// const UserRefreshTokenServicesInstance= new UserRefreshTokenServices()
 const UserServicesInstance= new UserServices()
 const setTokensCookies = require("../utils/setTokenCookies");
-const uploadOnCloudinary = require("../utils/cloudinary");
+// const uploadOnCloudinary = require("../utils/cloudinary");
 const getDataUri = require("../utils/dataUri");
 const cloudnary =require("cloudinary")
 class UserController{
   // Registration controller
     static userRegistration=async(req,res)=>{
        try {
-        console.log(req.body)
+        // console.log(req.body)
          const user=await UserServicesInstance.userRegister(req.body)
          res.status(201).json({
             success: true,
@@ -35,10 +35,10 @@ class UserController{
       try {
         const {user}= req
         const {password}= req.body
-        console.log(user,password)
+        // console.log(user,password)
         const response= await  UserServicesInstance.userLogin(password,user) 
-        console.log(response)
-        console.log(response)
+        // console.log(response)
+        // console.log(response)
         if(response.isLoggedin){
         //  setTokensCookies(res,response.accessToken,response.refreshToken,response.accessTokenExp,response.refreshTokenExp)
           return (
@@ -141,20 +141,14 @@ static updateProfile = async (req, res) => {
 
 // update Profile 
 
-
 static updateAvatarImage =async(req,res)=>{
   try {
     const avatarLocalPath =req.file
-    console.log(avatarLocalPath)
     if(!avatarLocalPath){
      return res.status(400).json({ message: "Avatar File is missing." });
     }
     const fileUri=getDataUri(avatarLocalPath)
     const mycloud=await cloudnary.v2.uploader.upload(fileUri.content)
-    console.log(mycloud)
-    // if(!avatar.url){
-    //  return res.status(400).json({ message: "Error while uploading on Avatar." });
-    // }
     const user= await UserServicesInstance.updateAvatar(req.params.id,mycloud)
     res.status(200).json({ user }); 
   } catch (error) {
@@ -170,18 +164,12 @@ static updateAvatarImage =async(req,res)=>{
 static updateLogoImage= async(req,res)=>{
 try {
   const logoLocalPath =req.file
-  console.log("logoLocalPath",logoLocalPath)
+  // console.log("logoLocalPath",logoLocalPath)
   if(!logoLocalPath){
    return res.status(400).json({ message: "logo File is missing." });
   }
   const fileUri=getDataUri(logoLocalPath)
   const mycloud=await cloudnary.v2.uploader.upload(fileUri.content)
-  // const logo= await uploadOnCloudinary(logoLocalPath)
-  console.log(mycloud)
-
-  // if(!logo.url){
-  //  return res.status(400).json({ message: "Error while uploading on Avatar." });
-  // }
   const user= await UserServicesInstance.updateLogo(req.params.id,mycloud)
   res.status(200).json({ user }); 
 } catch (error) {
@@ -194,14 +182,9 @@ try {
     try {
     // const refreshToken=req.cookies.refreshToken;
     console.log(req.params.id)
-    const user= await UserServicesInstance.findUserbyId(req.params.id)
-    
+    const user= await UserServicesInstance.findUserbyId(req.params.id)  
     if (!user) return res.status(404).json({ message: "user not found with this given Id" });
     await UserServicesInstance.deleteUser(req.params.id)
-    // await UserRefreshTokenServicesInstance.findOneAndUpdate(refreshToken)
-    // res.clearCookie('accessToken');
-    // res.clearCookie('refreshToken');
-    // res.clearCookie('is_auth')
     res.status(200).json({status:"success", message:"delete user successful"})
     } catch (error) {
     if(error.message.includes("Cast to ObjectId failed"))
