@@ -98,8 +98,8 @@ passport.use(new GoogleStrategy({
 
       // Generate JWT token for the user
       const token = await generateToken({ userId: user._id });
-      console.log("user", user._id);
-      console.log("access token", token);
+      // console.log("user", user._id);
+      // console.log("access token", token);
 
       // Return user info and the generated token
       return done(null, { user, token });
