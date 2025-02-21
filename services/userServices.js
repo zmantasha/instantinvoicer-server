@@ -81,7 +81,7 @@ verifyPassword=async(password,hashedPassword)=>{
 // find user by id
    findUserbyId=async(id)=>{
       try {  
-         console.log("id",id)
+         // console.log("id",id)
         const userid= await userModel.findOne({_id:id}).select('-password') 
         return userid
       } catch (error) {
