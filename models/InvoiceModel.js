@@ -28,8 +28,7 @@ const InvoiceSchema = new mongoose.Schema({
   },
   items: [
     {
-id: { type: String, required: true, default: () => crypto.randomUUID() }, // id generated using crypto.randomUUID()
-      // description: { type: String, required: true },
+      id: { type: String, required: true, default: () => crypto.randomUUID() },
       data: { type: mongoose.Schema.Types.Mixed, required: true },
       quantity: { type: Number, required: true },
       rate: { type: Number, required: true },
@@ -40,9 +39,13 @@ id: { type: String, required: true, default: () => crypto.randomUUID() }, // id 
     subtotal: { type: Number, default: 0 },
     tax: { type: Number, default: 0 },
     taxRate: { type: Number, default: 0 },
-    shipping: { type: Number, default: 0 },
+    taxType: { type: String, default: "" },
     discount: { type: Number, default: 0 },
-    discountType: { type: Number, default: 0},
+    igst: { type: Number, default: 0 }, // Added IGST
+    cgst: { type: Number, default: 0 }, // Added CGST
+    sgst: { type: Number, default: 0 }, // Added SGST
+    shipping: { type: Number, default: 0 },
+    discountType: { type: Number, default: 0 },
     shippingType: { type: String, default: "percentage" },
     total: { type: Number, default: 0 },
     amountPaid: { type: Number, default: 0 },
