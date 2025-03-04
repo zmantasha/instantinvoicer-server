@@ -5,11 +5,11 @@ const invoiceValidationSchema = Joi.object({
   userId: Joi.string(), 
   senderDetails: Joi.object({
     logo: Joi.string().allow("", null),
-    name: Joi.string().max(50).trim().required().messages({
+    name: Joi.string().max(100).trim().required().messages({
       "string.max": "Sender Name must be at most 50 characters",
       "any.required": "Sender Name is required",
     }),
-    address: Joi.string().max(60).trim().required().messages({
+    address: Joi.string().max(100).trim().required().messages({
       "string.max": "Sender Address must be at most 60 characters",
       "any.required": "Sender Address is required",
     }),
@@ -17,13 +17,13 @@ const invoiceValidationSchema = Joi.object({
   
   recipientDetails: Joi.object({
     billTo: Joi.object({
-      name: Joi.string().max(50).trim().required(),
-      address: Joi.string().max(60).trim().required(),
+      name: Joi.string().max(100).trim().required(),
+      address: Joi.string().max(100).trim().required(),
     }),
     
     shipTo: Joi.object({
-      name: Joi.string().max(50).trim().allow("", null),
-      address: Joi.string().max(60).trim().allow("", null),
+      name: Joi.string().max(100).trim().allow("", null),
+      address: Joi.string().max(100).trim().allow("", null),
     }).allow(null),  // `shipTo` is optional, can be null
   }).required(),
 
