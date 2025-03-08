@@ -21,7 +21,7 @@ class InvoiceServices {
   getAllInvoices = async () => {
     try {
       // const getAllInvoice = await InvoiceModel.find().populate("userId", "fullName email");
-      const getAllInvoice = await InvoiceModel.find()
+      const getAllInvoice = await InvoiceModel.find({}).select("-senderDetails.logo")
       return getAllInvoice;
     } catch (error) {
       throw error;
@@ -61,6 +61,8 @@ class InvoiceServices {
       throw error;
     }
   };
+
+
 
 
   // update invoice

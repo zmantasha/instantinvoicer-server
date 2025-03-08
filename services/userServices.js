@@ -39,7 +39,7 @@ verifyPassword=async(password,hashedPassword)=>{
       if(await this.verifyPassword(password,reqUser.password)){
       //   const {accessToken,refreshToken,accessTokenExp,refreshTokenExp} = await generateToken(reqUser)
         return {
-          user:{id:reqUser._id, email:reqUser.email, fullName:reqUser.fullName},
+          user:{reqUser},
           isLoggedin:true,
           token: await this.generateToken({userId: reqUser._id})
          //  accessToken:accessToken,
@@ -56,7 +56,7 @@ verifyPassword=async(password,hashedPassword)=>{
     }
    }
    generateToken=async(payload)=>{
-      const token= await jwt.sign(payload,process.env.JWT_ACCESS_TOKEN_SECRET_KEY,{expiresIn:"1hr"});
+      const token= await jwt.sign(payload,process.env.JWT_ACCESS_TOKEN_SECRET_KEY,{expiresIn:"5hr"});
       return token;
    }
 
