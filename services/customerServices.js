@@ -30,6 +30,15 @@ class CustomerServices{
        }
     }
 
+    getCustomerByUserId = async(id)=>{
+      try {
+        const getCustomerByUserId = await customerModel.find({})
+        return getCustomerByUserId
+      } catch (error) {
+        throw error
+      }
+    }
+
      updateCustomer= async(id,body)=>{
         try {
           const updateCustomer= await customerModel.findByIdAndUpdate({_id:id},body,{new:true})  

@@ -8,6 +8,7 @@ const validateCustomer= validateSchema(customerValidationSchema)
 router.post("/",validateCustomer ,customerController.createCustomer)
 router.get("/",customerController.getAllCustomer)
 router.get("/:id",customerController.getCustomerById)
+router.get("/userId/:id",customerController.getCustomerByUserId)
 router.delete("/:id",customerController.deleteCustomer)
 router.put("/:id",validateCustomer,customerController.updateCustomer)
 

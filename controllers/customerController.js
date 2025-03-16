@@ -31,6 +31,17 @@ class CustomerController {
         }
     }
 
+    static getCustomerByUserId = async()=>{
+      try {
+        const customer = await CustomerServicesInstance.getCustomerByUserId(req.params.id)
+        if(!customer)
+          return res.status(404).json({message:"Customer not found with this given Id"})
+        res.status(200).json(customer)
+      } catch (error) {
+        res.status(500).json({error:error.message})
+      }
+    }
+
     static updateCustomer=async(req,res)=>{
         try {
          const customer = await CustomerServicesInstance.getCustomerById(req.params.id)
