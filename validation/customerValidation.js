@@ -4,7 +4,8 @@ const Joi = require("joi");
 const customerValidationSchema = Joi.object({
   /** Basic Information */
   customerType: Joi.string().valid("business", "individual").required(),
-  name: Joi.string().trim().required(),
+  firstName: Joi.string().trim().required(),
+  lastName: Joi.string().trim().required(),
   displayName: Joi.string().trim().required(),
   email: Joi.string().email().trim().required(),
   workPhone: Joi.string()
