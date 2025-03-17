@@ -3,9 +3,14 @@ const CustomerServicesInstance = new CustomerServices()
 class CustomerController {
     static createCustomer = async(req,res)=>{
          try {
+          console.log(req.user)
+          req.body.createdBy = req.user.userId;
            const customer= await CustomerServicesInstance.createCustomer(req.body) 
            res.status(201).json({customer, messsage:"save customer successfull"})
          } catch (error) {
+          if (error.code === 11000) {
+            return res.status(400).json({ message: `Customer with this ${Object.keys(error.keyPattern)[0]}  already exists for this user` });
+          }
            res.status(500).json({error:error.message}) 
          }
     }
