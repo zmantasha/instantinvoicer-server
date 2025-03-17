@@ -4,9 +4,10 @@ const CustomerSchema = new mongoose.Schema(
   {
     /** Basic Information */
     customerType: { type: String, enum: ["business", "individual"], required: true }, // Business or Individual
-    name: { type: String, required: true, trim: true }, // Full Name / Company Name
+    firstName: { type: String, required: true, trim: true }, // Full Name / Company Name
+    lastName: { type: String, required: true, trim: true }, // Full Name / Company Name
     displayName: { type: String, required: true, trim: true }, // How to display customer name
-    email: { type: String, required: true, unique: true, trim: true },
+    email: { type: String, required: true, trim: true },
     workPhone: { type: String, trim: true }, // Work number
     mobilePhone: { type: String, trim: true }, // Mobile number
 
@@ -30,7 +31,7 @@ const CustomerSchema = new mongoose.Schema(
 
     /** Business Details (If applicable) */
     companyName: { type: String, trim: true }, // Only for business customers
-    taxId: { type: String, unique: true, sparse: true, trim: true }, // GST/VAT/TIN (optional)
+    taxId: { type: String, sparse: true, trim: true }, // GST/VAT/TIN (optional)
     currency: { type: String, default: "USD" }, // Default currency
     creditLimit: { type: Number, default: 0 }, // Allowed credit limit
     notes: { type: String, trim: true }, // Additional customer notes
@@ -55,11 +56,12 @@ const CustomerSchema = new mongoose.Schema(
 
     /** Status & Metadata */
     status: { type: String, enum: ["active", "inactive"], default: "active" }, // Active or inactive customer
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, // Who created this customer
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "user" ,require:true}, // Who created this customer
   },
   { timestamps: true } // Auto-generate createdAt & updatedAt fields
 );
 
+CustomerSchema.index({ email: 1, createdBy: 1 }, { unique: true });
 const customerModel = mongoose.model("Customer", CustomerSchema);
 
 module.exports = customerModel;
