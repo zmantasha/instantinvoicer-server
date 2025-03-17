@@ -31,7 +31,8 @@ const CustomerSchema = new mongoose.Schema(
 
     /** Business Details (If applicable) */
     companyName: { type: String, trim: true }, // Only for business customers
-    taxId: { type: String, sparse: true, trim: true }, // GST/VAT/TIN (optional)
+   // taxId: { type: String, sparse: true, trim: true, set: v => (v === "" ? null : v) }, // GST/VAT/TIN (optional)
+    taxId: { type: String, trim: true }, // GST/VAT/TIN (optional)
     currency: { type: String, default: "USD" }, // Default currency
     creditLimit: { type: Number, default: 0 }, // Allowed credit limit
     notes: { type: String, trim: true }, // Additional customer notes
