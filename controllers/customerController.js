@@ -3,7 +3,10 @@ const CustomerServicesInstance = new CustomerServices()
 class CustomerController {
     static createCustomer = async(req,res)=>{
          try {
-          console.log(req.user)
+         
+          if (!req.user || !req.user.userId) {
+            return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
+        }
           req.body.createdBy = req.user.userId;
            const customer= await CustomerServicesInstance.createCustomer(req.body) 
            res.status(201).json({customer, messsage:"save customer successfull"})
