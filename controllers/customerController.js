@@ -31,7 +31,7 @@ class CustomerController {
         }
     }
 
-    static getCustomerByUserId = async()=>{
+    static getCustomerByUserId = async(req,res)=>{
       try {
         const customer = await CustomerServicesInstance.getCustomerByUserId(req.params.id)
         if(!customer)

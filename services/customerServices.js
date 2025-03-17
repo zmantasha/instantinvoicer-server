@@ -32,7 +32,9 @@ class CustomerServices{
 
     getCustomerByUserId = async(id)=>{
       try {
-        const getCustomerByUserId = await customerModel.find({})
+        console.log(id)
+        const getCustomerByUserId = await customerModel.find({createdBy:id} );
+        console.log(getCustomerByUserId)
         return getCustomerByUserId
       } catch (error) {
         throw error
