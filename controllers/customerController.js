@@ -55,11 +55,16 @@ class CustomerController {
          const customer = await CustomerServicesInstance.getCustomerById(req.params.id)
          if(!customer)
             return res.status(404).json({message:"Customer not found with this given ID"})  
+
+         if (!req.user || !req.user.userId) {
+          return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
+      }
+        req.body.createdBy = req.user.userId;
         const updateCustomer = await CustomerServicesInstance.updateCustomer(req.params.id,req.body);
         if(!updateCustomer){
             return res.status(404).json({message:"Update failed. No change made."});
         } 
-        res.status(200).json({updateCustomer, message});
+        res.status(200).json({updateCustomer,  messsage:"update customer successfull"});
         } catch (error) {
             console.log("Error updating profile:", error);
           res.status(500).json({message:"oops something went wrong"})  
