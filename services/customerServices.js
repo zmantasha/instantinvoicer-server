@@ -1,5 +1,6 @@
 
 const customerModel = require("../models/customerModel");
+const InvoiceModel = require("../models/InvoiceModel");
 
 
 class CustomerServices{
@@ -52,6 +53,7 @@ class CustomerServices{
 
     deleteCustomer =async(id)=>{
       try {
+        // await InvoiceModel.deleteMany({ customer: id });
         const deleteCustomer= await customerModel.findByIdAndDelete(id);
         return deleteCustomer;
       } catch (error) {

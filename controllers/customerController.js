@@ -73,10 +73,12 @@ class CustomerController {
 
     static deleteCustomer= async(req,res)=>{
         try {
-           const customer = await CustomerServicesInstance.getCustomerById(req.params.id)
+          const customerId  = req.params.id;
+          const userId=req.user.userId
+           const customer = await CustomerServicesInstance.getCustomerById(customerId)
            if(!customer)
             return res.status(404).json({message:"customer not fount with this given ID"});
-            const deleteCustomer = await CustomerServicesInstance.deleteCustomer(req.params.id)
+            const deleteCustomer = await CustomerServicesInstance.deleteCustomer({ _id: customerId, user: userId })
             if(!deleteCustomer)
                 return res.status(404).json({message:"invoice not found"})
             

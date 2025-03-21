@@ -10,7 +10,7 @@ router.post("/",validateCustomer,verifyauthJwttoken ,customerController.createCu
 router.get("/",customerController.getAllCustomer)
 router.get("/:id",customerController.getCustomerById)
 router.get("/userId/:id",customerController.getCustomerByUserId)
-router.delete("/:id",customerController.deleteCustomer)
+router.delete("/:id",verifyauthJwttoken,customerController.deleteCustomer)
 router.put("/:id",validateCustomer,verifyauthJwttoken ,customerController.updateCustomer)
 
 module.exports= router
