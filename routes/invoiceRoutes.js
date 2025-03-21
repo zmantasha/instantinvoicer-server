@@ -1,6 +1,7 @@
 const express = require("express");
 const InvoiceController = require("../controllers/invoiceController");
 const validateSchema = require("../middleware/validatemiddleware");
+const verifyauthJwttoken = require("../middleware/authMiddleware")
 const { invoiceValidationSchema } = require("../validation/invoiceValidation");
 // const upload = require("../middleware/FileUploder");
 const singleUpload = require("../middleware/multer");
@@ -16,7 +17,7 @@ router.get("/invoices", InvoiceController.getAllInvoices);
 router.get("/invoices/:id", InvoiceController.getInvoiceById);
 router.get("/invoices/userId/:id", InvoiceController.getInvoicebyUserId);
 router.put("/invoices/:id",validateInvoice, InvoiceController.updateInvoice);
-router.delete("/invoices/:id", InvoiceController.deleteInvoice);
+router.delete("/invoices/:id",verifyauthJwttoken, InvoiceController.deleteInvoice);
 router.put("/invoices/:id/status", InvoiceController.updateInvoicestatus);
 
 

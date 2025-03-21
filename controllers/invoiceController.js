@@ -151,15 +151,18 @@ static updateInvoicestatus = async (req, res) => {
   // Delete an invoice
   static deleteInvoice = async (req, res) => {
     try {
+      const invoiceId  = req.params.id;
+      const userId = req.user.userId;
       const invoice = await InvoiceServiceInstance.getInvoiceById(
-        req.params.id
+        invoiceId
       );
+      
       if (!invoice)
         return res
           .status(404)
           .json({ message: "Invoice not found with this given Id" });
       const deletedInvoice = await InvoiceServiceInstance.deleteInvoice(
-        req.params.id
+        { _id: invoiceId, user: userId }
       );
       if (!deletedInvoice)
         return res.status(404).json({ message: "Invoice not found" });
