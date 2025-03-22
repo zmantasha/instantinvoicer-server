@@ -1,5 +1,7 @@
 const InvoiceServices = require("../services/invoiceServices");
 const InvoiceServiceInstance = new InvoiceServices();
+const CustomerServices= require("../services/customerServices")
+const CustomerServicesInstance = new CustomerServices()
 const crypto = require("crypto");
 const  uploadOnCloudinary = require("../utils/cloudinary");
 const getDataUri = require("../utils/dataUri");
@@ -8,12 +10,19 @@ class InvoiceController {
   // Create a new invoice
   static createInvoice = async (req, res) => {
     try {
-      // Generate a unique invoice URL
-      // const invoiceUrl = this.generateInvoiceUrl(); // Call the function to generate the URL
-
-      // Add the URL to the invoice body
-      // req.body.invoiceDetails.url = invoiceUrl;
-      const invoice = await InvoiceServiceInstance.createInvoice(req.body);
+      //  if (!req.user || !req.user.userId) {
+      //   return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
+      // }
+      const {customerId, ...invoiceData}= req.body
+      const customer= await CustomerServicesInstance.getCustomerById(customerId) 
+           if(!customer)
+            return res.status(404).json({message:"Customer not found with this given ID"})
+      const invoice = await InvoiceServiceInstance.createInvoice({ ...invoiceData,  customerId });
+        await CustomerServicesInstance.updateCustomer(
+          customerId,
+          { $push: { invoices: invoice._id } }, // Ensure invoices array gets updated
+          { new: true } // Returns the updated document
+        )
       // console.log(invoice);
       res.status(201).json({ invoice, message: "Save Invoice Successfull" });
     } catch (error) {
