@@ -49,7 +49,7 @@ const CustomerSchema = new mongoose.Schema(
     ],
 
     /** Invoice & Payment Details */
-    invoices: [{ type: mongoose.Schema.Types.ObjectId, ref: "Invoice" }], // Reference to invoices
+    invoices: [{ type: mongoose.Schema.Types.ObjectId, ref: "invoice" }], // Reference to invoices
     // paymentTerms: { type: String, enum: ["Net 30", "Net 60", "Due on Receipt"], default: "Due on Receipt" },
     balanceDue: { type: Number, default: 0 }, // Unpaid invoice balance
     totalPaid: { type: Number, default: 0 }, // Total amount paid
@@ -63,6 +63,6 @@ const CustomerSchema = new mongoose.Schema(
 );
 
 CustomerSchema.index({ email: 1, createdBy: 1 }, { unique: true });
-const customerModel = mongoose.model("Customer", CustomerSchema);
+const customerModel = mongoose.model("customer", CustomerSchema);
 
 module.exports = customerModel;
