@@ -3,13 +3,15 @@ const mongoose = require("mongoose");
 
 const InvoiceSchema = new mongoose.Schema({
  userId: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+ customerId: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
   senderDetails: {
     logo: { type: String, default: "" },
     name: { type: String, default: "" },
     address: { type: String, default: "" },
   },
   recipientDetails: {
-    billTo: {
+    billTo: {  
+     
       name: { type: String, default: "" },
       address: { type: String, default: "" },
     },
@@ -62,6 +64,6 @@ const InvoiceSchema = new mongoose.Schema({
 InvoiceSchema.statics.populateUser = async function (invoiceId) {
   return await this.findById(invoiceId).populate("userId", "fullName email");
 };
-const InvoiceModel = mongoose.model("Invoice", InvoiceSchema);
+const InvoiceModel = mongoose.model("invoice", InvoiceSchema);
 
 module.exports = InvoiceModel;
