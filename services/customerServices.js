@@ -24,7 +24,10 @@ class CustomerServices{
     }
     getCustomerById=async(id)=>{
        try {
-        const getCustomerById= await customerModel.findById(id).populate("createdBy","-password")
+        const getCustomerById= await customerModel.findById(id).populate("createdBy","-password").populate("invoices","_id")
+        if (!getCustomerById) {
+          throw new Error("Customer not found");
+        }
         return getCustomerById
        } catch (error) {
         throw error
