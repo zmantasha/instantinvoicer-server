@@ -1,3 +1,4 @@
+const customerModel = require("../models/customerModel");
 const CustomerServices= require("../services/customerServices")
 const CustomerServicesInstance = new CustomerServices()
 class CustomerController {
@@ -17,6 +18,31 @@ class CustomerController {
            res.status(500).json({error:error.message}) 
          }
     }
+
+
+    static searchByCustomerDisplayName=async(req,res)=>{
+       try {
+        const { displayName, firstName } = req.query; 
+        const query=[]
+        if(displayName){
+          query.push({displayName:{$regex:new RegExp(displayName,"i")}})
+        }
+        if(firstName){
+          query.push({firstName:{$regex:new RegExp(firstName,"i")}})
+        }
+        if(query.length===0){
+          return req.status(400).json({message:"please provide a displayName and firstName to search"})
+        }
+        const customer= await customerModel.find({
+          $or:query
+        });
+        res.send(customer)
+       } catch (error) {
+        console.log(error)
+        res.status(500).json({error:error.message}) 
+       }
+    }
+
 
     static getAllCustomer = async(req,res)=>{
         try{
