@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true,trim: true },
   avatar:{ type:String},
   logo:{type:String},
+  customer: [{ type: mongoose.Schema.Types.ObjectId, ref: "customer" }],
   createdAt: { type: Date, default: Date.now },
   is_verified: { type: Boolean, default: false },
   roles: { type: [String], enum: ["user", "admin"], default: ["user"] },
