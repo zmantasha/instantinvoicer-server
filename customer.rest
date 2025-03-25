@@ -106,3 +106,65 @@ Content-Type: application/json
 
   "status": "active"
 }
+
+
+###
+POST http://localhost:8000/api/v1/user/login
+Content-Type: application/json
+
+{
+    "email":"test@gmail.com",
+    "password":"mantasha"
+}
+###
+POST http://localhost:8000/api/v1/customer/
+Authorization:Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2EwNmNlNGVhNzcxYmViMzVlZmI2NGIiLCJpYXQiOjE3NDI4Mzk1ODAsImV4cCI6MTc0Mjg1NzU4MH0.MPv6pgPrQFBSrIEmmNSZCwgDavYeZoGSVPk72iqPmIU
+Content-Type: application/json
+
+{
+  "customerType": "business",
+  "firstName": "John Doe Enterprises",
+  "lastName": "John Doe Enterprises",
+  "displayName": "John Doe Ent.",
+  "email": "noorjahan@gmail.com",
+  "workPhone": "7897744166",
+  "mobilePhone": "7897744166",
+
+  "billingAddress": {
+    "street1": "123 Business Street",
+    "street2": "Suite 100",
+    "city": "New York",
+    "state": "NY",
+    "pinCode": "10001",
+    "country": "USA"
+  },
+
+  "shippingAddress": {
+    "street1": "456 Shipping Lane",
+    "street2": "Building B",
+    "city": "Los Angeles",
+    "state": "CA",
+    "pinCode": "90001",
+    "country": "USA"
+  },
+
+  "companyName": "John Doe Enterprises Inc.",
+  "taxId": "GST889900",
+  "currency": "USD",
+  "creditLimit": 50000,
+  "notes": "Preferred customer with high order volume",
+
+  "contacts": [
+    {
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "workPhone": "7897744166",
+      "mobilePhone": "7897744166",
+      "designation": "Sales Manager"
+    }
+  ],
+
+  "balanceDue": 2000,
+  "totalPaid": 15000,
+  "status": "active"
+}
