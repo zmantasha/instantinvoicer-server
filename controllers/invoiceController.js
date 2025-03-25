@@ -31,18 +31,6 @@ class InvoiceController {
   };
 
 
-//   // Function to generate a unique invoice URL
-//     static generateInvoiceUrl() {
-//   // Generate a random 8-character string as a URL-safe identifier
-//   const uniqueString = crypto.randomBytes(20).toString("hex");
-  
-//   // Construct the URL (you can customize the domain name here)
-//   const url = `http://localhost:3000/d/${uniqueString}`;
-
-//   return url;
-// }  
-
-
 static uploadSenderLogo=async(req,res)=>{
     try {
       const filePath = req.file; // Path of the uploaded file
