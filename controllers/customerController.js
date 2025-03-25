@@ -1,5 +1,7 @@
 const customerModel = require("../models/customerModel");
 const CustomerServices= require("../services/customerServices")
+const UserServices= require("../services/userServices")
+const UserServicesInstance= new UserServices()
 const CustomerServicesInstance = new CustomerServices()
 class CustomerController {
     static createCustomer = async(req,res)=>{
@@ -8,8 +10,46 @@ class CustomerController {
           if (!req.user || !req.user.userId) {
             return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
         }
-          req.body.createdBy = req.user.userId;
+        let userId = req.user?.userId || null; // Get user ID if available
+
+        if (userId) {
+            // Find the user
+            const user = await UserServicesInstance.findUserbyId(userId);
+            if (!user) {
+                userId = null; // If user not found, set to null
+            }
+        }
+         // Check if the email already exists for the same user
+            const existingCustomer = await customerModel.findOne({
+              email: req.body.email,
+              ...(userId && { createdBy: userId }) // Only filter by createdBy if userId exists
+          });
+
+          if (existingCustomer) {
+              return res.status(400).json({
+                  message: "This email is already registered as a customer under your account."
+              });
+          }
+
+      // Attach the user ID to the customer data only if user exists
+          if (userId) {
+              req.body.createdBy = userId;
+          }
+          // req.body.createdBy = req.user.userId;
            const customer= await CustomerServicesInstance.createCustomer(req.body) 
+          //  const user = await userModel.findById(req.user.userId);
+          //  if (!user) {
+          //      return res.status(404).json({ message: "User not found" });
+          //  }
+   
+          //  user.customer.push(customer);
+          if (userId) {
+            await UserServicesInstance.updateUser(
+                userId,
+                { $push: { customer: customer._id } },
+                { new: true }
+            );
+        }
            res.status(201).json({customer, messsage:"save customer successfull"})
          } catch (error) {
           if (error.code === 11000) {
