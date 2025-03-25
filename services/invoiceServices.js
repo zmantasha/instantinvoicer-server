@@ -39,6 +39,16 @@ class InvoiceServices {
   };
 
 
+
+  // find one
+      findOne=async(number)=>{
+        try {
+          const findOne= await InvoiceModel.findOne(number)
+          return findOne
+        } catch (error) {
+          throw error
+        }
+      }
   getInvoiceByuserId=async(userId)=>{
     try {
       const getInvoicebyuserId = await InvoiceModel.find({userId: userId })

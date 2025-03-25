@@ -6,13 +6,22 @@ const getDataUri = require("../utils/dataUri");
 const cloudnary =require("cloudinary")
 class InvoiceController {
   // Create a new invoice
+  
   static createInvoice = async (req, res) => {
     try {
       // Generate a unique invoice URL
       // const invoiceUrl = this.generateInvoiceUrl(); // Call the function to generate the URL
-
+        const {userId}=req.body
       // Add the URL to the invoice body
       // req.body.invoiceDetails.url = invoiceUrl;
+      const existingInvoice = await InvoiceServiceInstance.findOne({
+        "invoiceDetails.number": req.body.invoiceDetails.number,
+        ...(userId && { userId: userId }) 
+    });
+
+    if (existingInvoice) {
+        return res.status(400).json({ error: "Invoice number already exists" });
+    }
       const invoice = await InvoiceServiceInstance.createInvoice(req.body);
       // console.log(invoice);
       res.status(201).json({ invoice, message: "Save Invoice Successfull" });
