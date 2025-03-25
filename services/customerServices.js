@@ -6,12 +6,12 @@ const InvoiceModel = require("../models/InvoiceModel");
 class CustomerServices{
     createCustomer = async(customerData)=>{
         try {
-          const customer = new customerModel(customerData)  
+          const customer = new customerModel(customerData) 
           await  customer.save()
           return customer
         } catch (error) {
             throw error;
-        }
+        } 
     }
 
    getAllCustomer = async()=>{
