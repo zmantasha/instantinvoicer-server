@@ -11,7 +11,7 @@ const InvoiceSchema = new mongoose.Schema({
   },
   recipientDetails: {
     billTo: {  
-     
+      id:{type:String,default:""},
       name: { type: String, default: "" },
       address: { type: String, default: "" },
     },
