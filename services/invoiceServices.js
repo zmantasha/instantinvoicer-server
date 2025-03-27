@@ -49,14 +49,30 @@ class InvoiceServices {
           throw error
         }
       }
-  getInvoiceByuserId=async(userId)=>{
+  // getInvoiceByuserId=async(userId)=>{
+  //   try {
+  //     const getInvoicebyuserId = await InvoiceModel.find({userId: userId })
+  //     return getInvoicebyuserId;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
+
+  getInvoiceByuserId = async (userId, skip, limit) => {
     try {
-      const getInvoicebyuserId = await InvoiceModel.find({userId: userId })
-      return getInvoicebyuserId;
+      const invoices = await InvoiceModel.find({ userId })
+        .skip(skip)
+        .limit(limit);
+  
+      const total = await InvoiceModel.countDocuments({ userId });
+  
+      return { invoices, total };
     } catch (error) {
       throw error;
     }
-  }
+  };
+  
 
   // Update invoice
   updateInvoice = async (id, body) => {

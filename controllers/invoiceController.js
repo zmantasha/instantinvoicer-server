@@ -3,7 +3,8 @@ const InvoiceServiceInstance = new InvoiceServices();
 const crypto = require("crypto");
 const  uploadOnCloudinary = require("../utils/cloudinary");
 const getDataUri = require("../utils/dataUri");
-const cloudnary =require("cloudinary")
+const cloudnary =require("cloudinary");
+const InvoiceModel = require("../models/InvoiceModel");
 class InvoiceController {
   // Create a new invoice
   
@@ -49,6 +50,49 @@ static uploadSenderLogo=async(req,res)=>{
   }
 }
 
+
+//  static pagination=async(req,res)=>{
+//   try {
+//     const total = lim
+//   } catch (error) {
+//     console.error("Error in upload-logo route:", error);
+//     res.status(500).json({ message: "Internal server error" }); 
+//   }
+//  }
+
+// static pagination = async (req, res) => {
+//   try {
+//     let { page, limit } = req.query;
+
+//     // Convert page & limit to numbers, with default values
+//     page = parseInt(page) || 1;
+//     limit = parseInt(limit) || 10;
+
+//     const skip = (page - 1) * limit; // Calculate skip value
+
+//     // Count total documents
+//     const total = await InvoiceModel.countDocuments();
+
+//     // Fetch paginated results
+//     const data = await InvoiceModel.find().skip(skip).limit(limit);
+
+//     res.status(200).json({
+//       success: true,
+//       data,
+//       total,
+//       currentPage: page,
+//       totalPages: Math.ceil(total / limit),
+//       hasNextPage: page * limit < total,
+//       hasPrevPage: page > 1,
+//     });
+
+//   } catch (error) {
+//     console.error("Error in pagination route:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+
   // Get all invoices
   static getAllInvoices = async (req, res) => {
     try {
@@ -78,23 +122,63 @@ static uploadSenderLogo=async(req,res)=>{
   };
 
   // static get Invoice by userId
+  // static getInvoicebyUserId = async (req, res) => {
+  //   try {
+  //     // console.log(req.params.id);
+
+  //     const invoice = await InvoiceServiceInstance.getInvoiceByuserId(
+  //       req.params.id 
+  //     );
+  //     if (!invoice)
+  //       return res
+  //         .status(404)
+  //         .json({ message: "Invoice not found with this given Id" });
+  //     res.status(200).json(invoice);
+  //   } catch (error) {
+  //     if (error.message.includes("Cast to ObjectId failed"))
+  //       return res.status(404).json({ message: "invalid id" });
+  //     res.status(500).json({ message: "oops something wents wrong" });
+  //   }
+  // };
+
   static getInvoicebyUserId = async (req, res) => {
     try {
-      // console.log(req.params.id);
-      const invoice = await InvoiceServiceInstance.getInvoiceByuserId(
-        req.params.id
+      let { page, limit } = req.query;
+  
+      page = parseInt(page) || 1;
+      limit = parseInt(limit) || 10;
+      const skip = (page - 1) * limit;
+  
+      // Fetch paginated invoices
+      const { invoices, total } = await InvoiceServiceInstance.getInvoiceByuserId(
+        req.params.id, 
+        skip, 
+        limit
       );
-      if (!invoice)
+  
+      if (!invoices.length)
         return res
           .status(404)
-          .json({ message: "Invoice not found with this given Id" });
-      res.status(200).json(invoice);
+          .json({ message: "No invoices found for this user ID" });
+  
+      res.status(200).json({
+        success: true,
+        data: invoices,
+        total,
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page * limit < total,
+        hasPrevPage: page > 1,
+      });
+  
     } catch (error) {
       if (error.message.includes("Cast to ObjectId failed"))
-        return res.status(404).json({ message: "invalid id" });
-      res.status(500).json({ message: "oops something wents wrong" });
+        return res.status(404).json({ message: "Invalid user ID" });
+  
+      res.status(500).json({ message: "Oops, something went wrong" });
     }
   };
+  
 
   // Update an invoice
   static updateInvoice = async (req, res) => {
