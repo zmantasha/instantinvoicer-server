@@ -205,6 +205,37 @@ static uploadSenderLogo=async(req,res)=>{
     }
   };
 
+  static searchByCustomerDisplayName = async (req, res) => {
+    try {
+        const { displayName, firstName } = req.query;
+        const userId = req.user?.userId; // Get logged-in user's ID
+
+        if (!userId) {
+            return res.status(403).json({ message: "Unauthorized: User ID missing" });
+        }
+
+        if (!displayName && !firstName) {
+            return res.status(400).json({ message: "Please provide either displayName or firstName to search" });
+        }
+
+        // Build query for search
+        const query = { createdBy: userId }; // Filter by the current user's customers
+        if (displayName) {
+            query.displayName = { $regex: new RegExp(displayName, "i") };
+        }
+        if (firstName) {
+            query.firstName = { $regex: new RegExp(firstName, "i") };
+        }
+
+        // Fetch customers belonging to the user
+        const customers = await customerModel.find(query);
+
+        res.status(200).json(customers);
+    } catch (error) {
+        console.error("Error searching customers:", error);
+        res.status(500).json({ error: error.message });
+    }
+};
 
 
   // status Update
