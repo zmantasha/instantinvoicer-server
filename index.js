@@ -4,6 +4,7 @@ dotenv.config()
 require("colors")
 const userRoutes=require("./routes/userRoutes")
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const blogRoutes = require("./routes/blogRoutes");
 const connectDB = require("./config/connectDb");
 const cookieParser = require("cookie-parser");
 const cors= require("cors")
@@ -71,6 +72,7 @@ app.get('/', (req, res) => {
 });
 app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/invoice", invoiceRoutes)
+app.use("/api/v1/blog", blogRoutes)
 // Google Auth Routes
 app.get('/auth/google',
     passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
