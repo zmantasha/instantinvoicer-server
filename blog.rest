@@ -1,0 +1,41 @@
+###
+POST http://localhost:8002/api/v1/blog/create
+Content-Type: application/json
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+
+{
+  "blog_id": "B007",
+  "title": "My First Blog",
+  "banner": "https://example.com/banner.jpg",
+  "description": "This is a sample blog description.",
+  "content": ["Introduction", "Body content", "Conclusion"],
+  "tags": ["MERN", "MongoDB", "React"] 
+}
+###
+PUT  http://localhost:8002/api/v1/blog/67e7d8517fe3fa41b651da4d
+Content-Type: application/json
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+
+{
+  "blog_id": "B001",
+  "title": "My First Blog ss",
+  "banner": "https://example.com/banner.jpg",
+  "description": "This is a sample blog description.",
+  "content": ["Introduction", "Body content", "Conclusion"],
+  "tags": ["MERN", "MongoDB", "React"] 
+}
+
+###
+GET  http://localhost:8002/api/v1/blog/
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+###
+GET  http://localhost:8002/api/v1/blog/67e7d81e7fe3fa41b651da46
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+###
+Delete  http://localhost:8002/api/v1/blog/67e7d81e7fe3fa41b651da46
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
