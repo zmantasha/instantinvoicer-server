@@ -1,0 +1,94 @@
+###
+POST http://localhost:8002/api/v1/blog/create
+Content-Type: application/json
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+
+{
+  "blog_id": "B007",
+  "title": "My First Blog",
+  "banner": "https://example.com/banner.jpg",
+  "description": "This is a sample blog description.",
+  "content": ["Introduction", "Body content", "Conclusion"],
+  "tags": ["MERN", "MongoDB", "React"] 
+}
+###
+PUT  http://localhost:8002/api/v1/blog/67e7d8517fe3fa41b651da4d
+Content-Type: application/json
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+
+{
+  "blog_id": "B001",
+  "title": "My First Blog ss",
+  "banner": "https://example.com/banner.jpg",
+  "description": "This is a sample blog description.",
+  "content": ["Introduction", "Body content", "Conclusion"],
+  "tags": ["MERN", "MongoDB", "React"] 
+}
+
+###
+GET  http://localhost:8002/api/v1/blog/
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+###
+GET  http://localhost:8002/api/v1/blog/67e7d81e7fe3fa41b651da46
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+###
+Delete  http://localhost:8002/api/v1/blog/67e7d81e7fe3fa41b651da46
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+
+//In this project, I also want to add blog. Guide me what should be my approach
+
+//So, My APIs are in different folder which is alredy created. I want to use those Apis, Need to create a blog list (UI)
+
+//app/
+  blog/
+    [slug]/
+      page.tsx    # Individual blog post page
+    page.tsx      # Blog listing page
+components/
+  blog/
+    BlogCard.tsx  # Card component for blog preview
+    BlogList.tsx  # List component for blog posts
+types/
+  blog.ts         # TypeScript types for blog posts
+lib/
+  blog.ts         # Blog-related utilities and API functions
+
+
+  Would you like me to help you implement this step by step? We can start with either:
+Setting up the basic blog structure and implementing the markdown-based approach
+Setting up the database schema and API endpoints for a dynamic blog
+Creating the UI components for the blog listing and individual posts
+Please let me know which approach you prefer, and I'll guide you through the implementation. Also, let me know if you have any specific requirements for the blog feature, such as:
+Do you need a content management system (CMS)?
+Will you be writing the blog posts yourself, or do you need a user interface for content creation?
+Do you need any specific features like comments, likes, or social sharing?
+Do you have any design preferences that should match your existing UI?
+
+
+
+
+Update the API endpoint in app/blog/page.tsx:
+Replace ${process.env.NEXT_PUBLIC_API_URL}/api/blog/posts with your actual API endpoint
+Make sure your API returns data in the format specified in the BlogListResponse interface
+Add the blog link to your navigation menu (if you have one)
+The UI features:
+Responsive grid layout (1 column on mobile, 2 on tablet, 3 on desktop)
+Beautiful cards with hover effects
+Featured images support
+Author information with avatar
+Publication date
+Category and tags display
+SEO optimization
+Loading state handling
+Error handling
+Would you like me to:
+Add pagination support?
+Add filtering by category or tags?
+Add a search functionality?
+Create the individual blog post page?
+Add any other specific features you need?
+Let me know what additional functionality you'd like to add!
