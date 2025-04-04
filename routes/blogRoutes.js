@@ -6,7 +6,7 @@ const UserMiddleware = require("../middleware/userMiddleware")
 const router= express.Router()
 
 router.post("/create",verifyauthJwttoken, UserMiddleware.fetchUserIdInCollection,verifyAdmin,BlogController.createBlogs)
-router.get("/",verifyauthJwttoken, BlogController.getAllBlogs)
+router.get("/", BlogController.getAllBlogs)
 router.get("/:id",verifyauthJwttoken, BlogController.getBlogsById)
 router.delete("/:id",verifyauthJwttoken, UserMiddleware.fetchUserIdInCollection,verifyAdmin,BlogController.deleteBlogs)
 router.put("/:id",verifyauthJwttoken, UserMiddleware.fetchUserIdInCollection,verifyAdmin,BlogController.updateBlogs)
