@@ -100,6 +100,16 @@ verifyPassword=async(password,hashedPassword)=>{
     }
   }
 
+//   get All Users
+getAllUsers =async(req,res)=>{
+try {
+  const getAllUsers = await userModel.find({})  
+  return getAllUsers
+} catch (error) {
+  throw error 
+}
+}
+
 //   update Avatar
 updateAvatar=async(id,mycloud)=>{
 try {

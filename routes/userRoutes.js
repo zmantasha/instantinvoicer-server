@@ -19,6 +19,7 @@ const validateUpdateUser=validateSchema(UserValidation.updateUserValidateSchema)
 router.post("/registration",validateRegistrationUser, UserController.userRegistration)
 router.post("/login",validateLoginUser,UserMiddleware.fetchEmailIncollection, UserController.userLogin)
 router.post("/refresh-token", UserController.getNewAccessToken)
+router.get("/",UserController.getAllUsers)
 router.get("/me",verifyauthJwttoken,passport.authenticate('jwt', { session: false }), UserController.userProfile)
 router.put("/me/:id",validateUpdateUser,verifyauthJwttoken,passport.authenticate('jwt', { session: false }),  UserController.updateProfile)
 router.put(
