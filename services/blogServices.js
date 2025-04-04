@@ -72,7 +72,7 @@ class BlogServices {
             const blog = await BlogModel.findById(id)
                 .populate("author", "name email")
                 .populate("category", "name")
-                .populate("comments");
+                // .populate("comments");
 
             if (!blog) {
                 throw new Error("Blog not found");
