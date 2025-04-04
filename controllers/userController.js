@@ -62,6 +62,26 @@ class UserController{
       }
      }
 
+   
+
+     static getAllUsers = async (req, res) => {
+      try {
+          const blogs = await UserServicesInstance.getAllUsers();
+          
+          res.status(200).json({
+              success: true,
+              data: blogs
+          });
+      } catch (error) {
+          console.error("Error fetching blogs:", error);
+          res.status(500).json({
+              success: false,
+              message: "Error fetching blogs",
+              error: error.message
+          });
+      }
+  }
+
     //  Get New Access Token Or Refresh Token
     static getNewAccessToken= async(req,res)=>{
       try {
