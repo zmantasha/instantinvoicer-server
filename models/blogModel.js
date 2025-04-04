@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const blogSchema=new mongoose.Schema({
     blog_id:{
         type:String,
-        require:true,
+        required:true,
         unique:true,
     },
     slug: {
@@ -23,7 +23,7 @@ const blogSchema=new mongoose.Schema({
     },
     title:{
         type:String,
-        require:true,
+        required:true,
         trim: true
     },
     banner:{
