@@ -9,7 +9,7 @@ const upload = require("../middleware/FileUploder");
 const verifyauthJwttoken = require("../middleware/authMiddleware");
 const router= express.Router()
 const singleUpload = require("../middleware/multer");
-
+const verifyAdmin = require("../middleware/adminMiddleware")
 const validateRegistrationUser=validateSchema(UserValidation.registrationValidateSchema)
 const validateLoginUser=validateSchema(UserValidation.loginValidateSchema)
 const validateUpdateUser=validateSchema(UserValidation.updateUserValidateSchema)
@@ -19,7 +19,7 @@ const validateUpdateUser=validateSchema(UserValidation.updateUserValidateSchema)
 router.post("/registration",validateRegistrationUser, UserController.userRegistration)
 router.post("/login",validateLoginUser,UserMiddleware.fetchEmailIncollection, UserController.userLogin)
 router.post("/refresh-token", UserController.getNewAccessToken)
-router.get("/",UserController.getAllUsers)
+router.get("/",verifyauthJwttoken, UserMiddleware.fetchUserIdInCollection,verifyAdmin,UserController.getAllUsers)
 router.get("/me",verifyauthJwttoken,passport.authenticate('jwt', { session: false }), UserController.userProfile)
 router.put("/me/:id",validateUpdateUser,verifyauthJwttoken,passport.authenticate('jwt', { session: false }),  UserController.updateProfile)
 router.put(
