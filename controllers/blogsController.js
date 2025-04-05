@@ -13,29 +13,46 @@ class BlogController {
                 });
             }
 
+            // Get all fields from request body
+            const { title, description, content, category, author, status, banner, meta_title, meta_description, schema } = req.body;
+            
+            // Create slug from title
+            const slug = title.toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
+
+            // Create a unique blog_id
+            const blog_id = `${slug}-${Date.now()}`;
+
             // Validate required fields
-            const { title, slug, blog_id, content } = req.body;
-            if (!title || !slug || !blog_id || !content) {
+            if (!title || !description || !content || !category) {
                 return res.status(400).json({
                     success: false,
-                    message: "Missing required fields: title, slug, blog_id, and content are required"
+                    message: "Missing required fields: title, description, content, and category are required"
                 });
             }
 
-            // Add author and set default values
-            req.body.author = id;
-            req.body.activity = {
-                total_likes: 0,
-                total_comments: 0,
-                total_reads: 0,
-                total_parent_comments: 0
+            // Create the blog data object
+            const blogData = {
+                ...req.body,
+                slug,
+                blog_id,
+                author: id, // Use the authenticated user's ID as author
+                activity: {
+                    total_likes: 0,
+                    total_comments: 0,
+                    total_reads: 0,
+                    total_parent_comments: 0
+                }
             };
 
-            const createBlog = await BlogServicesInstance.createBlog(req.body);
+            const createBlog = await BlogServicesInstance.createBlog(blogData);
             
             res.status(201).json({
                 success: true,
-                data: createBlog,
+                data: {
+                    blog: createBlog
+                },
                 message: "Blog created successfully"
             });
         } catch (error) {
@@ -96,9 +113,10 @@ class BlogController {
         }
     }
 
-    static deleteBlogs = async (req, res) => {
+    static getBlogsBySlug=async(req,res)=>{
         try {
-            const blog = await BlogServicesInstance.getBlogsById(req.params.id);
+            console.log(req.params.id)
+            const blog = await BlogServicesInstance.getBlogsBySlug(req.params.id);
             
             if (!blog) {
                 return res.status(404).json({
@@ -107,8 +125,40 @@ class BlogController {
                 });
             }
 
+            res.status(200).json({
+                success: true,
+                data: blog
+            });
+        } catch (error) {
+            console.error("Error fetching blog:", error);
+            if (error.message.includes("Invalid blog ID format")) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid blog ID format"
+                });
+            }
+            res.status(500).json({
+                success: false,
+                message: "Error fetching blog",
+                error: error.message
+            });
+        }
+    }
+
+    static deleteBlogs = async (req, res) => {
+        try {
+            console.log(req.params.id)
+            const blog = await BlogServicesInstance.getBlogsById(req.params.id);
+            console.log(blog.author)
+            if (!blog) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Blog not found with the given ID"
+                });
+            }
+
             // Check if user is the author
-            if (blog.author.toString() !== req.user.id) {
+            if (blog.author._id.toString() !== req.user.id) {
                 return res.status(403).json({
                     success: false,
                     message: "You are not authorized to delete this blog"

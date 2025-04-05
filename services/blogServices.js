@@ -45,7 +45,7 @@ class BlogServices {
                 .sort(sort)
                 .skip((page - 1) * limit)
                 .limit(limit)
-                .populate("author", "name email")
+                .populate("author", "_id firstName lastName email")
                 .populate("category", "name");
 
             const total = await BlogModel.countDocuments(filter);
@@ -70,7 +70,29 @@ class BlogServices {
             }
 
             const blog = await BlogModel.findById(id)
-                .populate("author", "name email")
+                .populate("author", "_id firstName lastName email")
+                .populate("category", "name")
+                // .populate("comments");
+
+            if (!blog) {
+                throw new Error("Blog not found");
+            }
+
+            // Increment total reads
+            blog.activity.total_reads += 1;
+            await blog.save();
+
+            return blog;
+        } catch (error) {
+            throw error;
+        }
+    }
+    getBlogsBySlug = async(id) => {
+        try {
+           
+
+            const blog = await BlogModel.findOne({slug:id})
+                .populate("author", "_id firstName lastName email")
                 .populate("category", "name")
                 // .populate("comments");
 
@@ -93,6 +115,7 @@ class BlogServices {
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 throw new Error("Invalid blog ID format");
             }
+            console.log(id)
 
             const deletedBlog = await BlogModel.findByIdAndDelete(id);
             if (!deletedBlog) {

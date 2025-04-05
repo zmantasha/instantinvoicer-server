@@ -66,20 +66,32 @@ class UserController{
 
      static getAllUsers = async (req, res) => {
       try {
-          const blogs = await UserServicesInstance.getAllUsers();
+        const users = await UserServicesInstance.getAllUsers();
           
-          res.status(200).json({
-              success: true,
-              data: blogs
-          });
+        res.status(200).json({
+            success: true,
+            data: users
+        });
       } catch (error) {
-          console.error("Error fetching blogs:", error);
+          console.error("Error fetching Users:", error);
           res.status(500).json({
               success: false,
-              message: "Error fetching blogs",
+              message: "Error fetching Users",
               error: error.message
           });
       }
+  }
+
+  static getAuthors= async(req,res)=>{
+    try {
+     const authors= await UserServicesInstance.getAuthors({})
+     res.status(200).json({
+      success:true,
+      authors
+         })
+    } catch (error) {
+      res.status(500).json({message:"unable to fetch authors please try again latter"})
+    }
   }
 
     //  Get New Access Token Or Refresh Token

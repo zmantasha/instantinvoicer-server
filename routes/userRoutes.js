@@ -20,6 +20,7 @@ router.post("/registration",validateRegistrationUser, UserController.userRegistr
 router.post("/login",validateLoginUser,UserMiddleware.fetchEmailIncollection, UserController.userLogin)
 router.post("/refresh-token", UserController.getNewAccessToken)
 router.get("/",verifyauthJwttoken, UserMiddleware.fetchUserIdInCollection,verifyAdmin,UserController.getAllUsers)
+router.get("/authors",verifyauthJwttoken, UserMiddleware.fetchUserIdInCollection,verifyAdmin,UserController.getAuthors)
 router.get("/me",verifyauthJwttoken,passport.authenticate('jwt', { session: false }), UserController.userProfile)
 router.put("/me/:id",validateUpdateUser,verifyauthJwttoken,passport.authenticate('jwt', { session: false }),  UserController.updateProfile)
 router.put(

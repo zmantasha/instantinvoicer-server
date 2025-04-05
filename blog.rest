@@ -1,16 +1,18 @@
 ###
 POST http://localhost:8002/api/v1/blog/create
 Content-Type: application/json
-Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDM3NDc2NzAsImV4cCI6MTc0Mzc2NTY3MH0.GbMJk7SyibyB_7Ag8osXK40SrseCSC6ZGFnx6b0yQHU
 
 
 {
-  "blog_id": "B007",
-  "title": "My First Blog",
+  "blog_id": "B011",
+  "title": "My Eleven Blog",
+  "slug": "my-Eleven-blog",
   "banner": "https://example.com/banner.jpg",
   "description": "This is a sample blog description.",
   "content": ["Introduction", "Body content", "Conclusion"],
-  "tags": ["MERN", "MongoDB", "React"] 
+  "category": "642ab38f2f394aad67e2b1b9",
+  "tags": ["MERN", "MongoDB", "React"]
 }
 ###
 PUT  http://localhost:8002/api/v1/blog/67e7d8517fe3fa41b651da4d
@@ -39,3 +41,14 @@ Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2N
 Delete  http://localhost:8002/api/v1/blog/67e7d81e7fe3fa41b651da46
 Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
 
+###
+POST http://localhost:8002/api/v1/user/login
+Content-Type: application/json
+
+{
+  "email":"admin@gmail.com",
+  "password":"mantasha"
+}
+
+###
+GET http://localhost:8002/api/v1/user/
