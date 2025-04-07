@@ -23,7 +23,7 @@ class BlogController {
 
             // Create a unique blog_id
             const blog_id = `${slug}-${Date.now()}`;
-
+            
             // Validate required fields
             if (!title || !description || !content || !category) {
                 return res.status(400).json({
@@ -198,15 +198,50 @@ class BlogController {
                 });
             }
 
-            // Check if user is the author
-            if (blog.author.toString() !== req.user.id) {
+            // Check if user is the author or admin
+            if (blog.author._id.toString() !== req.user.id && !req.user.isAdmin) {
                 return res.status(403).json({
                     success: false,
                     message: "You are not authorized to update this blog"
                 });
             }
 
-            const updateBlog = await BlogServicesInstance.updateBlog(req.params.id, req.body);
+            // Create update data object with all fields from request body
+            const updateData = { ...req.body };
+
+            // Handle file upload if present
+            if (req.file) {
+                updateData.banner = req.file.path;
+            }
+
+            // Handle tags and schema parsing safely
+            if (updateData.tags) {
+                try {
+                    if (typeof updateData.tags === 'string') {
+                        updateData.tags = JSON.parse(updateData.tags);
+                    }
+                } catch (e) {
+                    console.error('Error parsing tags:', e);
+                    // If parsing fails, try to handle it as an array
+                    if (typeof updateData.tags === 'string') {
+                        updateData.tags = updateData.tags.split(',').map(tag => tag.trim());
+                    }
+                }
+            }
+
+            if (updateData.schema) {
+                try {
+                    if (typeof updateData.schema === 'string') {
+                        updateData.schema = JSON.parse(updateData.schema);
+                    }
+                } catch (e) {
+                    console.error('Error parsing schema:', e);
+                    // If parsing fails, set to empty array
+                    updateData.schema = [];
+                }
+            }
+
+            const updateBlog = await BlogServicesInstance.updateBlog(req.params.id, updateData);
             
             if (!updateBlog) {
                 return res.status(404).json({

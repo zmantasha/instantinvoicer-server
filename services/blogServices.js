@@ -133,23 +133,44 @@ class BlogServices {
                 throw new Error("Invalid blog ID format");
             }
 
-            // If updating slug, check if it already exists
-            if (body.slug) {
-                const existingBlog = await BlogModel.findOne({
-                    slug: body.slug,
-                    _id: { $ne: id }
-                });
-                if (existingBlog) {
-                    throw new Error("Blog with this slug already exists");
+            // Prepare update data
+            const updateData = {};
+            
+            // Add all fields that are present in the body
+            Object.keys(body).forEach(key => {
+                if (body[key] !== undefined && body[key] !== null) {
+                    if (key === 'tags' || key === 'schema') {
+                        try {
+                            // Check if the value is already an object
+                            if (typeof body[key] === 'object') {
+                                updateData[key] = body[key];
+                            } else {
+                                // Try to parse if it's a string
+                                updateData[key] = JSON.parse(body[key]);
+                            }
+                        } catch (e) {
+                            console.error(`Error parsing ${key}:`, e);
+                            // If parsing fails, use the original value
+                            updateData[key] = body[key];
+                        }
+                    } else {
+                        updateData[key] = body[key];
+                    }
                 }
-            }
+            });
 
+            // Update the blog with all fields
             const updatedBlog = await BlogModel.findByIdAndUpdate(
                 id,
-                { $set: body },
-                { new: true, runValidators: true }
-            ).populate("author", "name email")
-             .populate("category", "name");
+                { $set: updateData },
+                { 
+                    new: true,
+                    runValidators: true,
+                    context: 'query'
+                }
+            )
+            .populate("author", "_id firstName lastName email")
+            .populate("category", "name");
 
             if (!updatedBlog) {
                 throw new Error("Blog not found");
@@ -157,6 +178,7 @@ class BlogServices {
 
             return updatedBlog;
         } catch (error) {
+            console.error("Error in updateBlog service:", error);
             throw error;
         }
     }
