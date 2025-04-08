@@ -18,14 +18,9 @@ const invoiceValidationSchema = Joi.object({
   
   recipientDetails: Joi.object({
     billTo: Joi.object({
-<<<<<<< HEAD
-      name: Joi.string().max(200).trim().required(),
-      address: Joi.string().max(500).trim().required(),
-=======
       id: Joi.string(),
       name: Joi.string().max(100).trim().required(),
       address: Joi.string().max(100).trim().required(),
->>>>>>> feature/customer-api
     }),
     
     shipTo: Joi.object({
