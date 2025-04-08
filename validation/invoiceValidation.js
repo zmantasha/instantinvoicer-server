@@ -2,7 +2,8 @@ const Joi = require("joi");
 
 // Joi schema for invoice validation
 const invoiceValidationSchema = Joi.object({
-  userId: Joi.string(), 
+  userId: Joi.string().required(), 
+  customerId: Joi.string().required(), 
   senderDetails: Joi.object({
     logo: Joi.string().allow("", null),
     name: Joi.string().max(200).trim().required().messages({
@@ -17,8 +18,14 @@ const invoiceValidationSchema = Joi.object({
   
   recipientDetails: Joi.object({
     billTo: Joi.object({
+<<<<<<< HEAD
       name: Joi.string().max(200).trim().required(),
       address: Joi.string().max(500).trim().required(),
+=======
+      id: Joi.string(),
+      name: Joi.string().max(100).trim().required(),
+      address: Joi.string().max(100).trim().required(),
+>>>>>>> feature/customer-api
     }),
     
     shipTo: Joi.object({

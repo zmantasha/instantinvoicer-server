@@ -114,6 +114,7 @@ class InvoiceServices {
   };
   // Delete invoice
   deleteInvoice = async (id) => {
+    // console.log(id)
     try {
       const deleteinvoice = await InvoiceModel.findByIdAndDelete(id);
       return deleteinvoice;

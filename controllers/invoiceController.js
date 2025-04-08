@@ -1,5 +1,7 @@
 const InvoiceServices = require("../services/invoiceServices");
 const InvoiceServiceInstance = new InvoiceServices();
+const CustomerServices= require("../services/customerServices")
+const CustomerServicesInstance = new CustomerServices()
 const crypto = require("crypto");
 const  uploadOnCloudinary = require("../utils/cloudinary");
 const getDataUri = require("../utils/dataUri");
@@ -12,17 +14,9 @@ class InvoiceController {
     try {
       // Generate a unique invoice URL
       // const invoiceUrl = this.generateInvoiceUrl(); // Call the function to generate the URL
-        const {userId}=req.body
+
       // Add the URL to the invoice body
       // req.body.invoiceDetails.url = invoiceUrl;
-      const existingInvoice = await InvoiceServiceInstance.findOne({
-        "invoiceDetails.number": req.body.invoiceDetails.number,
-        ...(userId && { userId: userId }) 
-    });
-
-    if (existingInvoice) {
-        return res.status(400).json({ error: "Invoice number already exists" });
-    }
       const invoice = await InvoiceServiceInstance.createInvoice(req.body);
       // console.log(invoice);
       res.status(201).json({ invoice, message: "Save Invoice Successfull" });
@@ -232,15 +226,18 @@ static updateInvoicestatus = async (req, res) => {
   // Delete an invoice
   static deleteInvoice = async (req, res) => {
     try {
+      const invoiceId  = req.params.id;
+      const userId = req.user.userId;
       const invoice = await InvoiceServiceInstance.getInvoiceById(
-        req.params.id
+        invoiceId
       );
+      
       if (!invoice)
         return res
           .status(404)
           .json({ message: "Invoice not found with this given Id" });
       const deletedInvoice = await InvoiceServiceInstance.deleteInvoice(
-        req.params.id
+        { _id: invoiceId, user: userId }
       );
       if (!deletedInvoice)
         return res.status(404).json({ message: "Invoice not found" });
