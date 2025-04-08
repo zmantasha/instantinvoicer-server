@@ -181,7 +181,7 @@ try {
   static deleteProfile=async(req,res)=>{
     try {
     // const refreshToken=req.cookies.refreshToken;
-    console.log(req.params.id)
+    // console.log(req.params.id)
     const user= await UserServicesInstance.findUserbyId(req.params.id)  
     if (!user) return res.status(404).json({ message: "user not found with this given Id" });
     await UserServicesInstance.deleteUser(req.params.id)

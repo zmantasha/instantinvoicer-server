@@ -24,7 +24,7 @@ class CustomerServices{
     }
     getCustomerById=async(id)=>{
        try {
-        const getCustomerById= await customerModel.findById(id).populate("createdBy","-password") .populate({
+        const getCustomerById= await customerModel.findById(id).populate("createdBy","-password").populate({
           path: "invoices",
           model: "invoice",
         });
