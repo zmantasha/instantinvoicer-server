@@ -89,7 +89,17 @@ verifyPassword=async(password,hashedPassword)=>{
       }
    }
 
-
+   getAuthors = async () => {
+      try {
+        const authors = await userModel
+        .find({ roles: ['admin'] }) // exact match only
+        .select('-password');
+        return authors;
+      } catch (error) {
+        throw error;
+      }
+    };
+    
   //  update user by id
   updateUser=async(id,body)=>{
     try {
@@ -99,6 +109,16 @@ verifyPassword=async(password,hashedPassword)=>{
       throw error
     }
   }
+
+//   get All Users
+getAllUsers =async(req,res)=>{
+try {
+  const getAllUsers = await userModel.find({})  
+  return getAllUsers
+} catch (error) {
+  throw error 
+}
+}
 
 //   update Avatar
 updateAvatar=async(id,mycloud)=>{

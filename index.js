@@ -5,6 +5,9 @@ require("colors")
 const userRoutes=require("./routes/userRoutes")
 const invoiceRoutes = require("./routes/invoiceRoutes");
 const customerRoutes= require("./routes/customerRoutes")
+const blogRoutes = require("./routes/blogRoutes");
+const commentRoutes=require("./routes/commentRoutes")
+const categoryRoutes= require("./routes/categoryRoutes")
 const connectDB = require("./config/connectDb");
 const cookieParser = require("cookie-parser");
 const cors= require("cors")
@@ -73,6 +76,9 @@ app.get('/', (req, res) => {
 app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/invoice", invoiceRoutes)
 app.use("/api/v1/customer", customerRoutes)
+app.use("/api/v1/blog", blogRoutes)
+app.use("/api/v1/comment", commentRoutes)
+app.use("/api/v1/category",categoryRoutes)
 // Google Auth Routes
 app.get('/auth/google',
     passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));

@@ -26,6 +26,58 @@ Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2N
   "content": ["Introduction", "Body content", "Conclusion"],
   "tags": ["MERN", "MongoDB", "React"] 
 }
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDM3NDc2NzAsImV4cCI6MTc0Mzc2NTY3MH0.GbMJk7SyibyB_7Ag8osXK40SrseCSC6ZGFnx6b0yQHU
+
+
+{
+  "blog_id": "B011",
+  "title": "My Eleven Blog",
+  "slug": "my-Eleven-blog",
+  "banner": "https://example.com/banner.jpg",
+  "description": "This is a sample blog description.",
+  "content": ["Introduction", "Body content", "Conclusion"],
+  "category": "642ab38f2f394aad67e2b1b9",
+  "tags": ["MERN", "MongoDB", "React"]
+}
+###
+PUT  http://localhost:8002/api/v1/blog/67f124b4602da2c896cc8da2
+Content-Type: application/json
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDQwMDU5MTQsImV4cCI6MTc0NDAyMzkxNH0.7wn1At03NQ8UCI0orh3cE7NScdVseqE5ocrV28sM2_U
+
+
+ {
+    "activity": {
+      "total_likes": 0,
+      "total_comments": 0,
+      "total_reads": 35,
+      "total_parent_comments": 0
+    },
+    "_id": "67f124b4602da2c896cc8da2",
+    "blog_id": "mantasha-1743856820266",
+    "slug": "mantasha",
+    "meta_title": "mantasha",
+    "meta_description": "mantasha",
+    "title": "mantasha",
+    "banner": "",
+    "description": "mantasha",
+    "content": "<p>mantasha   xoooooo   mmm</p>",
+    "tags": [],
+    "author": {
+      "_id": "67e64fac7b797f56d0538753",
+      "firstName": "admin",
+      "email": "admin@gmail.com"
+    },
+    "category": {
+      "_id": "67ef92a5b833c2c15903370a",
+      "name": "test2"
+    },
+    "status": "draft",
+    "featured": false,
+    "comments": [],
+    "createdAt": "2025-04-05T12:40:20.401Z",
+    "updatedAt": "2025-04-07T06:04:30.230Z",
+    "__v": 0
+  }
 
 ###
 GET  http://localhost:8002/api/v1/blog/
@@ -33,6 +85,7 @@ Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2N
 
 ###
 GET  http://localhost:8002/api/v1/blog/67e7d81e7fe3fa41b651da46
+GET  http://localhost:8002/api/v1/blog/67f124b4602da2c896cc8da2
 Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDMyNDM1NDIsImV4cCI6MTc0MzI2MTU0Mn0.h_nVifS3XzJjany2OPN9YL0HXb6QEhGxftDqggC1FNw
 
 ###
@@ -92,3 +145,14 @@ Add a search functionality?
 Create the individual blog post page?
 Add any other specific features you need?
 Let me know what additional functionality you'd like to add!
+###
+POST http://localhost:8002/api/v1/user/login
+Content-Type: application/json
+
+{
+  "email":"admin@gmail.com",
+  "password":"mantasha"
+}
+
+###
+GET http://localhost:8002/api/v1/user/

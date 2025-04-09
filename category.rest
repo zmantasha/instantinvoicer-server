@@ -1,0 +1,8 @@
+Post http://localhost:8002/api/v1/category
+Content-Type: application/json
+Authorization: Bearar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2U2NGZhYzdiNzk3ZjU2ZDA1Mzg3NTMiLCJpYXQiOjE3NDM3NDc2NzAsImV4cCI6MTc0Mzc2NTY3MH0.GbMJk7SyibyB_7Ag8osXK40SrseCSC6ZGFnx6b0yQHU
+
+{
+    "name":"test2",
+    "description":"test"
+}
